@@ -35,10 +35,10 @@ class StreamCreate extends Component {
 const validate = (formValues) => {
   const errors = {};
   if (!formValues.title) {
-    errors.title = 'Streams must have a title';
+    errors.title = 'Streams must have a title.';
   }
   if (!formValues.description) {
-    errors.description = 'Streams must have a description';
+    errors.description = 'Streams must have a description.';
   }
   return errors;
 };
