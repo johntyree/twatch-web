@@ -5,7 +5,6 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src/",
     "jsx": "react",
-    "checkJs": true,
     "paths": { "*": [ "*" ] }
   },
   "exclude": [
