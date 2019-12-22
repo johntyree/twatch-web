@@ -1,10 +1,15 @@
-export const SIGN_IN = "SIGN_IN";
-export const SIGN_OUT = "SIGN_OUT";
+import { SIGN_IN, SIGN_OUT } from './types';
 
-export const signIn = () => {
-  return { type: SIGN_IN };
+export const signIn = ( userId ) => {
+  return {
+    type: SIGN_IN,
+    userId: userId,
+  };
 }
 
-export const signOut = () => {
-  return { type: SIGN_OUT };
+export const signOut = ( userId ) => {
+  return {
+    type: SIGN_OUT,
+    userId: userId,
+  };
 }
