@@ -1,16 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchStreams } from '../../actions';
 
 
-function StreamItem({ title, description }) {
+function StreamItem({ stream, currentUserId }) {
+  var adminButtons = "";
+  if (stream.userId === currentUserId) {
+    adminButtons = (
+      <div className="right floated content">
+        <button className="ui button primary">Edit</button>
+        <button className="ui button negative">Delete</button>
+      </div>
+    );
+  };
+
   return (
     <div className="item">
+      { adminButtons }
       <i className="large middle aligned icon camera" />
       <div className="content">
-        { title }
+        { stream.title }
         <div className="description">
-        { description }
+        { stream.description }
         </div>
       </div>
     </div>
@@ -19,16 +31,31 @@ function StreamItem({ title, description }) {
 
 class StreamList extends React.Component {
 
+  renderCreate() {
+    if (this.props.currentUserId) {
+      return (
+      <div className="ui secondary pointed menu">
+        <div className="right menu">
+          <Link to="/streams/new" className="ui button primary">
+          CreateStream
+          </Link>
+        </div>
+      </div>
+      );
+    }
+  }
+
   render() {
-    const rendered = this.props.streams.map(stream => {
-        return <StreamItem key={stream.id} {...stream} />;
+    const renderedList = this.props.streams.map(stream => {
+      return <StreamItem key={stream.id} stream={stream} currentUserId={this.props.currentUserId} />;
     });
     return (
     <div>
       <h2>Streams</h2>
       <div className="ui celled list">
-        {rendered}
+        {renderedList}
       </div>
+      { this.renderCreate() }
     </div>
     );
   }
@@ -39,8 +66,11 @@ class StreamList extends React.Component {
 
 }
 
-const mapStateToProps = ({ streams }) => {
-  return { streams: Object.values(streams) };
+const mapStateToProps = ({ streams, auth }) => {
+  return {
+    streams: Object.values(streams),
+    currentUserId: auth.userId
+  };
 };
 
 export default connect(
